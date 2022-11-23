@@ -55,7 +55,7 @@ ROOT_URLCONF = 'proyectoMvt.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["C:/Users/lucas/OneDrive/python/django/MVT/proyecto-mvt/proyectoMvt/proyectoMvt/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
