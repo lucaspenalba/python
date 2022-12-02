@@ -74,8 +74,8 @@ def busquedaProducto(request):
 def buscar(request):
     if request.GET["serie"]:
         serie=request.GET["serie"]
-        inventario=Inventario.objects.filter(serie_icontains=serie)
-        return render(request, "AppCoder/resultadoBusqueda.html", {"inventario":inventario}) 
+        inventarios=Inventario.objects.filter(serie_icontains=serie)
+        return render(request, "AppCoder/resultadoBusqueda.html", {"inventarios":inventarios}) 
     else:
         return render(request, "AppCoder/busquedaProducto.html", {"mensaje":"ingresa numero de serie"})          
 

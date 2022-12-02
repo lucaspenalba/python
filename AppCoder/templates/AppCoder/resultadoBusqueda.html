@@ -3,9 +3,9 @@
 {% load static %}
 
 {% block titulo %}
-<h1>Resultado de clientes por apellido</h1>
+<h1>Resultado de productos</h1>
 <ul>    
-    {% for item in inventario}
+    {% for item in inventarios}
         <li>{{item.nombre}}</li>
         <li>{{item.serie}}</li>
     {% endfor %}
