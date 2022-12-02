@@ -28,4 +28,18 @@ def familiar(request):
     return HttpResponse(plantilla.render(context, request))
 
 
+    
+def inicio(request):
+    return render (request, "AppCoder/inicio.html")
+
+def clientes(request):
+    return render (request, "AppCoder/clientes.html")
+
+def empleados(request):
+    return render (request, "AppCoder/empleados.html")
+
+def inventario(request):
+    return render (request, "AppCoder/inventario.html")
+
+
 
