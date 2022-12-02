@@ -28,6 +28,6 @@ class Inventario(models.Model):
     precio=models.IntegerField()
 
     def _str_(self):
-	    return self.nombre        
+	    return self.nombre+" "+str(self.serie)      
 
 

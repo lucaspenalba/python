@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from AppCoder.models import Cliente, Empleado, Inventario
+from .models import Cliente, Empleado, Inventario
 from django.http import HttpResponse
 from django.template import Template, loader
 
@@ -73,11 +73,12 @@ def busquedaProducto(request):
 
 def buscar(request):
     if request.GET["serie"]:
-        serie=request.GET["serie"]
+        serie=request.GET['serie']
         inventarios=Inventario.objects.filter(serie_icontains=serie)
-        return render(request, "AppCoder/resultadoBusqueda.html", {"inventarios":inventarios}) 
+        return render(request, "AppCoder/resultadoBusqueda.html", {"inventarios":inventarios, "serie":serie}) 
     else:
-        return render(request, "AppCoder/busquedaProducto.html", {"mensaje":"ingresa numero de serie"})          
+        respuesta = "no enviaste datos"
+        return HttpResponse(respuesta)
 
 
 
