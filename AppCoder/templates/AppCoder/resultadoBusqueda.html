@@ -1,0 +1,14 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>Resultado de clientes por apellido</h1>
+<ul>    
+    {% for item in inventario}
+        <li>{{item.nombre}}</li>
+        <li>{{item.serie}}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

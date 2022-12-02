@@ -1,33 +1,10 @@
 from django.shortcuts import render
-from .models import *
-from AppCoder.models import *
+from AppCoder.models import Cliente, Empleado, Inventario
 from django.http import HttpResponse
 from django.template import Template, loader
+
+from AppCoder.forms import ClienteForm, EmpleadoForm, InventarioForm
 # Create your views here.
-
-def familiar(request):
-    familiar=Familiares(nombre="Lucas", apellido="Peñalba", mail="lucas@gmail.com", fecha_nacimiento="1986-02-15", edad=36, sexo="masculino"  )
-    familiar2=Familiares(nombre="Florencia", apellido="Peñalba", mail="florencia@gmail.com", fecha_nacimiento="1994-06-17", edad=27, sexo="femenino"  )
-    familiar3=Familiares(nombre="Flavia", apellido="Peñalba", mail="flavia@gmail.com", fecha_nacimiento="1990-08-06", edad=32, sexo="femenino"  )
-    familiar4=Familiares(nombre="Benjamin", apellido="Peñalba", mail="benjamin@gmail.com", fecha_nacimiento="2013-03-26", edad=9, sexo="masculino"  )
-    familiar5=Familiares(nombre="Mariano", apellido="Peñalba", mail="mariano@gmail.com", fecha_nacimiento="1965-01-13", edad=57, sexo="masculino"  )
-    familiar6=Familiares(nombre="Silvia", apellido="Vergara", mail="silvia@gmail.com", fecha_nacimiento="1963-11-26", edad=58, sexo="femenino"  )
-
-    familiar.save()
-    familiar2.save()
-    familiar3.save()
-    familiar4.save()
-    familiar5.save()
-    familiar6.save()
-
-    diccionario = Familiares.objects.all().values()    
-    plantilla=loader.get_template("template1.html")
-
-    context = {'diccionario': diccionario,}
-
-
-    return HttpResponse(plantilla.render(context, request))
-
 
     
 def inicio(request):
@@ -37,11 +14,70 @@ def clientes(request):
     return render (request, "AppCoder/clientes.html")
 
 def empleados(request):
-    return render (request, "AppCoder/empleados.html")
+    if request.method=="POST":
+        form=EmpleadoForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data 
+            nom=info["nombre"]
+            ape=info["apellido"]
+            correo=info["mail"]
+
+            empleado=Empleado(nombre=nom, apellido=ape, mail=correo)
+            empleado.save()
+            return render (request, "AppCoder/inicio.html", {"mensaje":"Ingresado Correctamente"})
+    else:
+        formulario=EmpleadoForm()
+
+    return render (request, "AppCoder/empleados.html", {"form":formulario})   
 
 def inventario(request):
-    return render (request, "AppCoder/inventario.html")
+    if request.method=="POST":
+        form=InventarioForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data 
+            ser=info["serie"]
+            nom=info["nombre"]
+            des=info["descripcion"]
+            can=info["cantidad"]
+            pre=info["precio"]
 
+            inventario=Inventario(serie=ser, nombre=nom, descripcion=des, cantidad=can, precio=pre)
+            inventario.save()
+            return render (request, "AppCoder/inicio.html", {"mensaje":"Ingresado Correctamente"})
+    else:
+        formulario=InventarioForm()
+
+    return render (request, "AppCoder/inventario.html", {"form":formulario})   
+
+
+
+def clienteFormulario(request):
+    if request.method=="POST":
+        form=ClienteForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data 
+            nom=info["nombre"]
+            ape=info["apellido"]
+            mail=info["correo"]
+
+            cliente=Cliente(nombre=nom, apellido=ape, correo=mail)
+            cliente.save()
+            return render (request, "AppCoder/inicio.html")
+    else:
+        formulario=ClienteForm()
+
+    return render (request, "AppCoder/clienteFormulario.html", {"form":formulario})    
+
+def busquedaProducto(request):
+    return render(request, "AppCoder/busquedaProducto.html")       
+
+def buscar(request):
+    if request.GET["serie"]:
+        serie=request.GET["serie"]
+        inventario=Inventario.objects.filter(serie_icontains=serie)
+        return render(request, "AppCoder/resultadoBusqueda.html", {"inventario":inventario}) 
+    else:
+        return render(request, "AppCoder/busquedaProducto.html", {"mensaje":"ingresa numero de serie"})          
 
 
 

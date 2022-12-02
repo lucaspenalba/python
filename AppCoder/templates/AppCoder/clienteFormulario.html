@@ -3,14 +3,12 @@
 {% load static %}
 
 {% block titulo %}
-<h1>Formulario</h1>
+<h1>Formulario Clientes</h1>
 
-<form action="{% url 'clienteFormulario'%}" method="POST"> {% csrf_token %}
-    <p>Nombre: <input type="text" name="nombre"></p>
-    <p>Apellido: <input type="text" name="apellido"></p>
-    <p>Correo: <input type="email" name="mail"></p>
-    <p>fecha: <input type="date" name="fecha_nacimiento"></p>
-    <p>Sexo: <input type="text" name="sexo"></p>
+<form action="{% url 'clienteFormulario' %}" method="POST"> {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
     <input type="submit" value="Enviar">
 </form>    
 
