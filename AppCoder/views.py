@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Familiares
+from .models import *
+from AppCoder.models import *
 from django.http import HttpResponse
 from django.template import Template, loader
 # Create your views here.
@@ -40,6 +41,9 @@ def empleados(request):
 
 def inventario(request):
     return render (request, "AppCoder/inventario.html")
+
+
+
 
 
 
