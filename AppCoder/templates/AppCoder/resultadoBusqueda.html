@@ -6,10 +6,10 @@
 <h1>Resultado de productos</h1>
 
 <ul>    
-    {% for item in inventarios}
-        <li>{{item.nombre}}</li>
-        <li>{{item.serie}}</li>
+    {% for data in data %}
+        <li>{{data.nombre}}</li>
+        <li>{{data.cantidad}}</li>
     {% endfor %}
 </ul>
-
+{{ mensaje }}
 {% endblock %}

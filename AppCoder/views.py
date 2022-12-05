@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Cliente, Empleado, Inventario
 from django.http import HttpResponse
 from django.template import Template, loader
+from django.db.models import Q
 
 from AppCoder.forms import ClienteForm, EmpleadoForm, InventarioForm
 # Create your views here.
@@ -72,15 +73,10 @@ def busquedaProducto(request):
     return render(request, "AppCoder/busquedaProducto.html")       
 
 def buscar(request):
-    if request.GET["serie"]:
-        serie=request.GET['serie']
-        inventarios=Inventario.objects.filter(serie_icontains=serie)
-        return render(request, "AppCoder/resultadoBusqueda.html", {"inventarios":inventarios, "serie":serie}) 
+    if 'search' in request.GET:
+        search = request.GET['search']
+        data=Inventario.objects.filter(nombre__icontains=search)
+        return render(request,"Appcoder/resultadoBusqueda.html", {"data":data} )
     else:
-        respuesta = "no enviaste datos"
-        return HttpResponse(respuesta)
-
-
-
-
-
+        return render(request, "Appcoder/busquedaProducto.html", {"mensaje":"Ingresa un nombre "})
+  
